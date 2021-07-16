@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty } from "class-validator"
+import { IsEmail, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator"
 
 
 export class AuthCredentialsDto {
@@ -6,9 +6,16 @@ export class AuthCredentialsDto {
     @IsEmail()
     email: string
 
-    @IsNotEmpty()
+    @IsString()
+    @MinLength(2)
+    @MaxLength(20)
     nickname: string
 
-    @IsNotEmpty()
+    @IsString()
+    @MinLength(8)
+    @MaxLength(32)
+    @Matches(/((?=.\d)|(?=.\W+))(?![.\n])(?=.[A-Z])(?=.[a-z]).*$/, {
+        message: 'password is too weak'
+    })
     password: string
 }
