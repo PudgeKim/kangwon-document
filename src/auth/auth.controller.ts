@@ -1,6 +1,5 @@
 import { Get, Post, Req, UseGuards } from '@nestjs/common';
 import { Param, Body, Controller } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { SignUpDto, SignInDto } from './dto/auth-credentials';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -30,7 +29,7 @@ export class AuthController {
     }
 
     @Get('/:id')
-    getUserByID(@Param('id') id: string): Promise<AppUser> {
+    getUserByID(@Param('id') id: string): Promise<PublicAppUser> {
         return this.authService.getUserByID(id)
     }
 

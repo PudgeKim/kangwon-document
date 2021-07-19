@@ -19,14 +19,18 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async getUserByID(id: string): Promise<AppUser> {
+  async getUserByID(id: string): Promise<PublicAppUser> {
     const user = await this.usersRepository.findOne(id);
 
     if (!user) {
       throw new NotFoundException(`User with ID "${id}" not found`);
     }
 
-    return user;
+    return {
+      id: user.id,
+      email: user.email,
+      nickname: user.nickname
+    };
   }
 
   signUp(signUpDto: SignUpDto): Promise<void> {
