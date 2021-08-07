@@ -12,3 +12,8 @@ export class SaveNoteDto {
 
   order: string;
 }
+
+export class GetSentencesDto {
+  @MinLength(1)
+  word: string;
+}

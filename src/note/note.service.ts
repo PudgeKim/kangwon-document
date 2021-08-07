@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { NoteRepository } from './note.repository';
 import { SaveNoteDto } from './dto/note.dto';
 import { Notes } from './note-type';
+import { Like } from 'typeorm';
 
 @Injectable()
 export class NoteService {
@@ -29,5 +30,20 @@ export class NoteService {
     return {
       notes: notes,
     };
+  }
+
+  async getRecommendedSentences(word: string): Promise<String[]> {
+    const notes = await this.noteRepository.find({
+      where: {
+        content: Like(`%${word}%`),
+      },
+      take: 5,
+    });
+
+    const sentences = notes.map((note) => {
+      return note.content;
+    });
+
+    return sentences;
   }
 }
