@@ -1,7 +1,12 @@
-import { IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsNumberString,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class SaveNoteDto {
-  @IsString()
+  @IsNumberString()
   userId: string;
 
   @MinLength(1)
@@ -14,6 +19,9 @@ export class SaveNoteDto {
 }
 
 export class GetSentencesDto {
+  @IsNumberString()
+  userId: string;
+
   @MinLength(1)
   word: string;
 }

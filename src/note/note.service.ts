@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseInterceptors } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NoteRepository } from './note.repository';
-import { SaveNoteDto } from './dto/note.dto';
-import { Notes } from './note-type';
+import { GetSentencesDto, SaveNoteDto } from './dto/note.dto';
+import { Notes, Sentences } from './note-type';
 import { Like } from 'typeorm';
 
 @Injectable()
@@ -32,9 +32,13 @@ export class NoteService {
     };
   }
 
-  async getRecommendedSentences(word: string): Promise<String[]> {
+  async getRecommendedSentences(
+    getSentencesDto: GetSentencesDto,
+  ): Promise<Sentences> {
+    const { userId, word } = getSentencesDto;
     const notes = await this.noteRepository.find({
       where: {
+        userId: userId,
         content: Like(`%${word}%`),
       },
       take: 5,
@@ -44,6 +48,6 @@ export class NoteService {
       return note.content;
     });
 
-    return sentences;
+    return { sentences: sentences };
   }
 }

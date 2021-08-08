@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { GetSentencesDto, SaveNoteDto } from './dto/note.dto';
 import { NoteService } from './note.service';
-import { Notes } from './note-type';
+import { Notes, Sentences } from './note-type';
 
 @Controller('note')
 export class NoteController {
@@ -20,8 +20,7 @@ export class NoteController {
   @Post('/get-sentences/')
   getRecommendedSentences(
     @Body() getSentencesDto: GetSentencesDto,
-  ): Promise<String[]> {
-    const word = getSentencesDto.word;
-    return this.noteService.getRecommendedSentences(word);
+  ): Promise<Sentences> {
+    return this.noteService.getRecommendedSentences(getSentencesDto);
   }
 }
