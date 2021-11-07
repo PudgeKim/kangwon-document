@@ -46,7 +46,7 @@ export class NoteService {
     });
 
     const sentences = notes.map((note) => {
-      note.content.replace(/<[^>]*>?/gm, '');
+      note.content = note.content.replace(/<[^>]*>?/gm, '');
       return note.content;
     });
 
